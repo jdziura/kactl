@@ -2,6 +2,7 @@
 
 #include "../../content/number-theory/MillerRabin.h"
 namespace sieve {
+const int LIM = 1e6;
 #include "../../content/number-theory/FastEratosthenes.h"
 }
 
