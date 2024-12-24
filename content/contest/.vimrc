@@ -1,6 +1,8 @@
-set cin aw ai is ts=4 sw=4 tm=50 nu noeb bg=dark ru cul
-sy on   |   im jk <esc>   |   im kj <esc>   |   no ; :
-" Select region and then type :Hash to hash your selection.
-" Useful for verifying that there aren't mistypes.
-ca Hash w !cpp -dD -P -fpreprocessed \| tr -d '[:space:]' \
- \| md5sum \| cut -c-6
+set nu et ts=2 sw=2
+filetype indent on
+syntax on
+colorscheme habamax
+hi MatchParen ctermfg=66 ctermbg=234 cterm=underline
+nnoremap ; :
+nnoremap : ;
+inoremap {<cr> {<cr>}<esc>O <bs>
