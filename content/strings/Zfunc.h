@@ -1,8 +1,8 @@
 /**
  * Author: chilli
  * License: CC0
- * Description: z[i] computes the length of the longest common prefix of s[i:] and s,
- * except z[0] = 0. (abacaba -> 0010301)
+ * Description: z[i] computes the length of the longest common prefix of s[i:] and s
+ * (abacaba -> 7010301).
  * Time: O(n)
  * Status: stress-tested
  */
@@ -18,5 +18,6 @@ vi Z(const string& S) {
 		if (i + z[i] > r)
 			l = i, r = i + z[i];
 	}
+	if (sz(S)) z[0] = sz(S);
 	return z;
 }

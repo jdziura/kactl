@@ -17,7 +17,7 @@ void test(const string &s) {
 	int n = sz(s);
 	vi found = Z(s);
 	vi expected(n, 0);
-	rep(i, 1, n) { // exclude index 0 (!)
+	rep(i, 0, n) {
 		int j = 0;
 		while (i + j < n && s[i + j] == s[j])
 			j++;
