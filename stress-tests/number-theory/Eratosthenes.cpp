@@ -20,6 +20,7 @@ vi eratosthenes(int LIM) {
 	return pr;
 }
 }
+const int LIM = 1e6;
 #include "../../content/number-theory/FastEratosthenes.h"
 #include "../../content/number-theory/Eratosthenes.h"
 
