@@ -57,6 +57,8 @@ COMMENT_TYPES = [
     ("'''", "'''"),
     ('"""', '"""'),
 ]
+COLUMN_LIMIT=55
+TAB_SIZE=2
 
 def find_start_comment(source, start=None):
     first = (-1, -1, None)
@@ -145,6 +147,11 @@ def processwithcomments(caption, instream, outstream, listingslang):
         nsource = nsource.rstrip() + source[end:]
     nsource = nsource.strip()
 
+    for line in nsource.splitlines():
+        length = len(line) + line.count('\t') * (TAB_SIZE - 1)
+        if length > COLUMN_LIMIT:
+            warning = f'Column limit exceeded ({length}/{COLUMN_LIMIT})'
+
     if listingslang in ['C++', 'Java']:
         hash_script = 'hash'
         p = subprocess.Popen(['sh', 'content/contest/%s.sh' % hash_script], stdin=subprocess.PIPE, stdout=subprocess.PIPE, encoding="utf-8")
@@ -221,9 +228,7 @@ def print_header(data, outstream):
     def adjust(name):
         return name if name.startswith('.') else name.split('.')[0]
     output = r"\enspace{}".join(map(adjust, lines[:ind]))
-    font_size = 10
-    if header_length > 150:
-        font_size = 8
+    font_size = 8
     output = r"\hspace{3mm}\textbf{" + output + "}"
     output = "\\fontsize{%d}{%d}" % (font_size, font_size) + output
     print(output, file=outstream)

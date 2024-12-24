@@ -69,7 +69,7 @@
 
 % Include a list of source files at the top of every page. For the purpose
 % of recording those, we use eTeX marks. (We can't just append data directly to
-% the header, because TeX outputs pages asynchronously, noticeably so when
+% the header, because TeX outputs pages asynchronously, noticably so when
 % multicol is in use.) There is no command for getting all marks set on a page,
 % so we take only the last one and include all non-included files up until that
 % one. Most of the time \splitbotmark will give us the right mark, but in rare
@@ -122,9 +122,9 @@
 
 	\parindent \z@ \raggedright \normalfont
 		\interlinepenalty\@M
-	{\underline{\huge \bfseries #1} }
+	{\underline{\large\bfseries #1} }
 	\ifnum \c@secnumdepth >\m@ne
-		{\huge\bfseries (\thechapter) \par\nobreak }
+		{\bfseries (\thechapter) \par\nobreak }
 	\fi
 	\startcontents[chapters]
 }
@@ -132,17 +132,17 @@
 \renewcommand\section{\@startsection {section}{1}{\z@}%
                                    {-0.5ex \@plus -1ex \@minus -.2ex}%
                                    {.4ex}%
-                                   {\normalfont\LARGE\bfseries}}
+                                   {\normalfont\bfseries}}
 
 \renewcommand\subsection{\@startsection{subsection}{2}{\z@}
 	{1ex\@plus -1ex \@minus -.3ex}
 	{.2ex}
-	{\normalfont\large\bfseries}}
+	{\normalfont\bfseries}}
 
 \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}
 	{1ex\@plus -1ex \@minus -.3ex}
 	{1ex \@plus .2ex}
-	{\normalfont\large\bfseries}}
+	{\normalfont\bfseries}}
 
 % Styles for local toc
 \titlecontents{localsection}[1.5em]{\small}{}
@@ -199,10 +199,9 @@
 \lstset{tabsize=2}
 \lstset{showstringspaces=false}
 \lstset{breaklines=true}
-\lstset{basicstyle=\footnotesize\ttfamily}
-\lstset{commentstyle=\normalfont\itshape}
+\lstset{basicstyle=\fontsize{6}{6}\selectfont\ttfamily}
 \lstset{literate={^}{\caret}{1} {~}{\tilde}{1} {\{}{\nicelbrace}{1} {\}}{\nicerbrace}{1}}
-\lstset{emptylines=*1}
+\lstset{emptylines=*0}
 \lstset{inputencoding=utf8}
 \lstset{aboveskip=3pt}
 \lstset{belowskip=2pt}
@@ -210,7 +209,7 @@
 \lstdefinelanguage{raw}{} % Raw language, no keywords.
 
 \setlength{\columnseprule}{0.5pt} % Multicol separation line with
-\setlength{\columnsep}{10pt} % Multicol separation margin
+\setlength{\columnsep}{7pt} % Multicol separation margin
 \setcounter{tocdepth}{1} % Table of contents depth
 
 \pdfsuppresswarningpagegroup=1

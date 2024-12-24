@@ -2,23 +2,50 @@ name: C/C++ CI
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  schedule:
+    - cron: '0 0 */7 * *'
 
 jobs:
-  build:
+  verify:
+    runs-on: ubuntu-latest
 
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+
+    - name: Install dependencies
+      run: pip3 install -U online-judge-verify-helper
+
+    - name: Set up cache
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cache/online-judge-tools
+          .verify-helper/timestamps.remote.json
+        key: verify-${{ github.run_number }}-${{ github.run_attempt }}
+        restore-keys: verify-
+
+    - name: Run tests
+      env:
+        YUKICODER_TOKEN: ${{ secrets.YUKICODER_TOKEN }}
+        DROPBOX_TOKEN: ${{ secrets.DROPBOX_TOKEN }}
+      run: oj-verify run
+
+    - name: Log timestamps
+      run: cat .verify-helper/timestamps.remote.json
+
+  stress:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Install pdflatex
-      run: sudo apt-get install texlive-latex-base texlive-latex-recommended texlive-latex-extra
-    - name: Build pdf
-      run: make kactl
-    - name: Run compiles
-      run: make test-compiles
-    - name: Run stress tests
+    - uses: actions/checkout@v4
+
+    - name: Run tests
       run: make test
+
