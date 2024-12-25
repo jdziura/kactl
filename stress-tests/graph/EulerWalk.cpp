@@ -1,6 +1,13 @@
 #include "../utilities/template.h"
 
+#define eulerWalk eulerWalk2
 #include "../../content/graph/EulerWalk.h"
+#undef eulerWalk
+vi eulerWalk(vector<vector<pii>>& gr, int nedges, int src=0) {
+	vi ret;
+	for (auto [v, e] : eulerWalk2(gr, nedges, src)) ret.push_back(v);
+	return ret;
+}
 
 struct UF {
 	vi v;
