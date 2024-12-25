@@ -1,5 +1,5 @@
 /**
- * Author: Per Austrin, Simon Lindholm
+ * Author: Per Austrin, Simon Lindholm, Adam Soltan
  * Date: 2004-02-08
  * License: CC0
  * Description: Solves $Ax = b$. If no solutions exist, returns $-1$.
@@ -32,7 +32,7 @@ int solveLinear(vector<vector<T>>& A, vector<T>& b, vector<T>& x) {
 		swap(col[i], col[bc]);
 		rep(j,0,n) swap(A[j][i], A[j][bc]);
 		bv = 1/A[i][i];
-		rep(j,i+1,n) {
+		rep(j,0,n) if (j != i) {
 			T fac = A[j][i] * bv;
 			b[j] -= fac * b[i];
 			rep(k,i+1,m) A[j][k] -= fac*A[i][k];
