@@ -36,7 +36,7 @@ int main() {
     cin >> u >> v;
     g[u].push_back(v);
   }
-  vi mt(m, -1);
+  vi mt(r, -1);
   cout << matching(g, mt) << '\n';
-  rep(i, 0, m) if (mt[i] != -1) cout << mt[i] << ' ' << i << '\n';
+  rep(i, 0, r) if (mt[i] != -1) cout << mt[i] << ' ' << i << '\n';
 }
