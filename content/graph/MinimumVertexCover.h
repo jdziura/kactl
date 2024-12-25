@@ -9,11 +9,11 @@
  */
 #pragma once
 
-#include "DFSMatching.h"
+#include "Matching.h"
 
 vi cover(vector<vi>& g, int n, int m) {
 	vi match(m, -1);
-	int res = dfsMatching(g, match);
+	int res = matching(g, match);
 	vector<bool> lfound(n, true), seen(m);
 	for (int it : match) if (it != -1) lfound[it] = false;
 	vi q, cover;
