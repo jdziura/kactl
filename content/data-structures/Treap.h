@@ -10,22 +10,23 @@
  */
 #pragma once
 
+mt19937 rng(2137);
 struct Node {
-	Node *l = 0, *r = 0;
+	Node *l = 0, *r = 0, *p = 0;
 	int val, y, c = 1;
-	Node(int val) : val(val), y(rand()) {}
-	void recalc();
+	Node(int val) : val(val), y(rng()) {}
+	friend int cnt(Node* n) { return n ? n->c : 0; }
+	void recalc() { c = cnt(l) + cnt(r) + 1; }
+	void push() {}
 };
 
-int cnt(Node* n) { return n ? n->c : 0; }
-void Node::recalc() { c = cnt(l) + cnt(r) + 1; }
-
-template<class F> void each(Node* n, F f) {
+void each(Node* n, auto f) {
 	if (n) { each(n->l, f); f(n->val); each(n->r, f); }
 }
 
 pair<Node*, Node*> split(Node* n, int k) {
 	if (!n) return {};
+	n->push(); n->p = 0;
 	if (cnt(n->l) >= k) { // "n->val >= k" for lower_bound(k)
 		auto pa = split(n->l, k);
 		n->l = pa.second;
@@ -40,14 +41,17 @@ pair<Node*, Node*> split(Node* n, int k) {
 }
 
 Node* merge(Node* l, Node* r) {
-	if (!l) return r;
-	if (!r) return l;
+	if (!l || !r) return l ?: r;
 	if (l->y > r->y) {
+		l->push();
 		l->r = merge(l->r, r);
+		if (l->r) l->r->p = l;
 		l->recalc();
 		return l;
 	} else {
+		r->push();
 		r->l = merge(l, r->l);
+		if (r->l) r->l->p = r;
 		r->recalc();
 		return r;
 	}
@@ -56,6 +60,27 @@ Node* merge(Node* l, Node* r) {
 Node* ins(Node* t, Node* n, int pos) {
 	auto [l,r] = split(t, pos);
 	return merge(merge(l, n), r);
+}
+
+// Union of two sorted treaps, O(m log(n/m)) where m<=n
+// Makes small-to-large O(n log n) instead of log^2.
+// Requires lower_bound split (not the default one).
+Node* unite(Node* a, Node* b) {
+	if (!a || !b) return a ?: b;
+	if (a->y < b->y) swap(a, b);
+	auto [l, r] = split(b, a->val); // lower_bound split
+	return merge(unite(l,a->l), merge(a, unite(r,a->r)));
+}
+
+// Number of elements before n. If there are range
+// reverse queries, recursively push the path to n.
+int idx(Node* n) {
+	int c = cnt(n->l);
+	while (n->p) {
+		if (n->p->l != n) c += cnt(n->p->l) + 1;
+		n = n->p;
+	}
+	return c;
 }
 
 // Example application: move the range [l, r) to index k
