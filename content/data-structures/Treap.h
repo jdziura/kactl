@@ -30,13 +30,13 @@ pair<Node*, Node*> split(Node* n, int k) {
 	if (cnt(n->l) >= k) { // "n->val >= k" for lower_bound(k)
 		auto [L,R] = split(n->l, k);
 		n->l = R;
-		n->recalc();
-		return {L, n};
+		if (n->l) n->l->p = n;
+		return n->recalc(), pair(L, n);
 	} else {
 		auto [L,R] = split(n->r,k - cnt(n->l) - 1); // and just "k"
 		n->r = L;
-		n->recalc();
-		return {n, R};
+		if (n->r) n->r->p = n;
+		return n->recalc(), pair(n, R);
 	}
 }
 
