@@ -29,13 +29,11 @@ pair<Node*, Node*> split(Node* n, int k) {
 	n->push(); n->p = 0;
 	if (cnt(n->l) >= k) { // "n->val >= k" for lower_bound(k)
 		auto [L,R] = split(n->l, k);
-		n->l = R;
-		if (n->l) n->l->p = n;
+		if (n->l = R) n->l->p = n;
 		return n->recalc(), pair(L, n);
 	} else {
 		auto [L,R] = split(n->r,k - cnt(n->l) - 1); // and just "k"
-		n->r = L;
-		if (n->r) n->r->p = n;
+		if (n->r = L) n->r->p = n;
 		return n->recalc(), pair(n, R);
 	}
 }
@@ -44,13 +42,11 @@ Node* merge(Node* l, Node* r) {
 	if (!l || !r) return l ?: r;
 	if (l->y > r->y) {
 		l->push();
-		l->r = merge(l->r, r);
-		if (l->r) l->r->p = l;
+		if (l->r = merge(l->r, r)) l->r->p = l;
 		return l->recalc(), l;
 	} else {
 		r->push();
-		r->l = merge(l, r->l);
-		if (r->l) r->l->p = r;
+		if (r->l = merge(l, r->l)) r->l->p = r;
 		return r->recalc(), r;
 	}
 }
@@ -66,8 +62,11 @@ Node* ins(Node* t, Node* n, int pos) {
 Node* unite(Node* a, Node* b) {
 	if (!a || !b) return a ?: b;
 	if (a->y < b->y) swap(a, b);
+  a->push(); a->p = 0;
 	auto [l, r] = split(b, a->val); // lower_bound split
-	return merge(unite(l,a->l), merge(a, unite(r,a->r)));
+  if (a->l = unite(l, a->l)) a->l->p = a;
+  if (a->r = unite(r, a->r)) a->r->p = a;
+  return a->recalc(), a;
 }
 
 // Number of elements before n. If there are range
