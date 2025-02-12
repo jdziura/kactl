@@ -49,6 +49,19 @@ Poly integr(const Poly& a) {
   rep(i, 1, sz(b)) b[i] = a[i - 1] / i;
   return b;
 }
+Poly shift(Poly p, mint c) { // p(x + c)
+  int n = sz(p);
+  Poly q(n, 1); mint fac = 1;
+  rep(i, 1, n) {
+    p[i] *= (fac *= i);
+    q[n - 1 - i] = q[n - i] * c / i;
+  }
+  p *= q;
+  p.erase(p.begin(), p.begin() + n - 1);
+  fac = 1;
+  rep(i, 1, n) p[i] /= (fac *= i);
+  return p;
+}
 Poly log(const Poly& a) { // a[0] = 1
   Poly b = integr(deriv(a) * inv(a));
   return b.resize(sz(a)), b;
@@ -117,7 +130,7 @@ Poly interp(vector<mint> x, vector<mint> y) {
     down[i] = down[2*i]*up[2*i+1]+down[2*i+1]*up[2*i];
   return down[1];
 }
-Poly subsetSum(Poly a) { // a[0] = 0
+Poly subsetSum(Poly a) { // a[0] = 0, a[i] = cnt of i
   int n = sz(a);
   Poly b(n);
   rep(i, 1, n) b[i] = mint(i).inv() * (i % 2 ? 1 : -1);
