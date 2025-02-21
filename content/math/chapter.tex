@@ -80,6 +80,15 @@ z = r\cos\theta & \phi = \textrm{atan2}(y,x)
 	\int e^{-x^2} = \frac{\sqrt \pi}{2} \text{erf}(x) &&& \int xe^{ax}dx = \frac{e^{ax}}{a^2}(ax-1)
 \end{align*}
 
+Polish Mafia:
+\begin{gather*}
+  \int \sqrt{1 + x^2} = \dfrac{1}{2} \Bigl( x \sqrt{1 + x^2} + \arcsinh x \Bigr) \quad (\arcsinh = \texttt{asinh})\\
+  \int \sqrt{1 - x^2} = \dfrac{1}{2} \Bigl( x \sqrt{1 - x^2} + \arcsin x \Bigr) \\
+  \int \dfrac{1}{ax^2 + bx + c} = \dfrac{2}{\sqrt{4ac - b^2}} \arctan \dfrac{2ax+b}{\sqrt{4ac - b^2}} \quad (\Delta < 0) \\
+  \int \dfrac{x}{ax^2 + bx + c} = \dfrac{1}{2a} \ln |ax^2 + bx + c| - \dfrac{b}{2a} \int \dfrac{1}{ax^2 + bx + c} \\
+  \texttt{tgamma}(t) = \Gamma(t) = \int_{0}^{\infty} x^{t-1}e^{-x} \,dx
+\end{gather*}
+
 Integration by parts:
 \[\int_a^bf(x)g(x)dx = [F(x)g(x)]_a^b-\int_a^bF(x)g'(x)dx\]
 
@@ -174,3 +183,11 @@ $\lim_{k\rightarrow\infty}\mathbf{P}^k = \mathbf{1}\pi$.
 A Markov chain is an A-chain if the states can be partitioned into two sets $\mathbf{A}$ and $\mathbf{G}$, such that all states in $\mathbf{A}$ are absorbing ($p_{ii}=1$), and all states in $\mathbf{G}$ leads to an absorbing state in $\mathbf{A}$.
 The probability for absorption in state $i\in\mathbf{A}$, when the initial state is $j$, is $a_{ij} = p_{ij}+\sum_{k\in\mathbf{G}} a_{ik}p_{kj}$.
 The expected time until absorption, when the initial state is $i$, is $t_i = 1+\sum_{k\in\mathbf{G}}p_{ki}t_k$.
+
+\subsection{Optimization}
+
+\subsubsection{Lagrange multipliers}
+To optimize $f(x_1, \dots, x_n)$ subject to the constraints $g_k(x_1, \dots, x_n) = 0$,
+a necessary condition for $(x_1, \dots, x_n)$ to be a local extremum is that
+the gradient $\nabla f(x_1, \dots x_n)$ must be a linear combination of
+the gradients $\nabla g_k(x_1, \dots, x_n)$.
