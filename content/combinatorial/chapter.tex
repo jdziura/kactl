@@ -99,6 +99,18 @@
 			\item ways a convex polygon with $n+2$ sides can be cut into triangles by connecting vertices with straight lines.
 			\item permutations of $[n]$ with no 3-term increasing subseq.
 		\end{itemize}
+    
+  \subsection{LGV lemma}
+    Let $A = (a_1, \dots, a_n)$, $B = (b_1, \dots, b_n)$ be subsets of vertices of a DAG.
+    By $\omega(P)$ denote a path weight, the product of edge weights in that path.
+    Let $M_{i, j}$ be the sum of path weights over all possible paths from
+    $a_i$ to $b_j$ (when unit weights, note this is the number of paths).
+    \[
+      \det(M) = \sum_{(P_1, \dots, P_n) \in S_\pi(A, B)} \text{sgn}(\pi) \prod_{i=1}^n \omega(P_i)
+    \]
+    Where $S_\pi(A, B)$ is the set of $n$-tuples of vertex disjoint paths (including endpoints)
+    where the $k$-th path is from $a_k$ to $b_{\pi(k)}$.
+    Particularly useful when only identity permutation is possible.
 
 \section{Other}
 	\kactlimport{DeBruijn.h}

@@ -70,3 +70,17 @@
 		% Test: stress-tests/graph/erdos-gallai.cpp
 		A simple graph with node degrees $d_1 \ge \dots \ge d_n$ exists iff $d_1 + \dots + d_n$ is even and for every $k = 1\dots n$,
 		\[ \sum _{i=1}^{k}d_{i}\leq k(k-1)+\sum _{i=k+1}^{n}\min(d_{i},k). \]
+
+  \subsection{Gale-Ryser theorem}
+    % Source: https://en.wikipedia.org/wiki/Gale%E2%80%93Ryser_theorem
+    A simple bipartite graph with degree sequences $a_1 \geq \dots \geq a_n$
+    and $b_1, \dots, b_m$ exists iff $\sum a_i = \sum b_i$ and for every
+    $1 \leq k \leq n$
+    \[ \sum_{i=1}^k a_i \leq \sum_{i=1}^m \min(b_i, k). \]
+
+  \subsection{BEST theorem}
+    % Source: https://atcoder.jp/contests/abc336/editorial/9283
+    The number of Eulerian circuits on an Eulerian graph equals
+    \[ t(v) \prod_{u} (\mathrm{deg}(u) - 1)! \]
+    where $t(v)$ is the number of spanning trees directed towards an arbitrary root $v$,
+    and $\mathrm{deg(u)}$ is the outdegree of vertex $u$.
