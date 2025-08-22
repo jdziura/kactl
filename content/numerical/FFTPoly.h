@@ -130,12 +130,25 @@ Poly interp(vector<mint> x, vector<mint> y) {
     down[i] = down[2*i]*up[2*i+1]+down[2*i+1]*up[2*i];
   return down[1];
 }
-Poly subsetSum(Poly a) { // a[0] = 0, a[i] = cnt of i
+// B(x) = product of (1 + x^k)^{a_k} for k=1..inf
+Poly subsetSum(Poly a) { // a[0] = 0
   int n = sz(a);
   Poly b(n);
   rep(i, 1, n) b[i] = mint(i).inv() * (i % 2 ? 1 : -1);
   for (int i = n - 2; i > 0; i--)
     for (int j = 2; i * j < n; j++)
       a[i * j] += b[j] * a[i];
+  return exp(a);
+}
+// B(x) = product of 1 / (1 - a_k*x^k) for k=1..inf
+Poly eulerTransform(Poly a) { // a[0] = 0
+  int n = sz(a);
+  Poly b(n);
+  rep(i, 1, n) b[i] = mint(i).inv();
+  for (int i = n - 1; i > 0; i--) {
+    mint m = a[i];
+    for (int j = 2; i * j < n; j++)
+      m *= a[i], a[i * j] += b[j] * m;
+  }
   return exp(a);
 }
