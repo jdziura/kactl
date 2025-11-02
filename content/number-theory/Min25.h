@@ -56,3 +56,20 @@ struct Min25 {
   ll quo(ll x, ll y) { return (double)x / y; }
   ll idx(ll x) { return x <= sq ? s - x : quo(n, x); }
 };
+/*
+ * Usage 1 (phi):
+ * Min25<mi> m(n);
+ * auto sum = m.sieve([](ll x) { 
+ *  return x * (x + 1) / 2; });
+ * auto cnt = m.sieve([](ll x) { return x; });
+ * rep(i, 0, sz(sum)) sum[i] -= cnt[i];
+ * auto phi = m.unsieve(sum, [](ll p, ll k, ll pk) { 
+ *  return pk - pk / p; });
+ * Usage 2 f(p^e) = ae + bp:
+ * auto s = m.sieve([](ll x) { 
+ *  return i2 * x * (x + 1); });
+ * auto c = m.sieve([](ll x) { return x; });
+ * rep(i, 0, sz(s)) s[i] = a * c[i] + b * s[i];
+ * auto f = m.unsieve(s, [](ll p, ll k, ll) { 
+ *  return a * k + b * p; });
+ */

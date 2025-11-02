@@ -1,6 +1,7 @@
 /**
  * Author: Adam Soltan
  * Description: Wavelet tree. Can be sped up with bitset. Easily extendable to support sum.
+ * Do żyłowania użyć BitSum
  * Time: O((n + q) \log n)
 */
 #pragma once
@@ -48,5 +49,26 @@ struct Node {
     int x = s[a], y = s[b];
     return (l ? l->freq(x, y, k) : 0) +
            (r ? r->freq(a - x, b - y, k) : 0);
+  }
+};
+struct BitSum {
+  struct E {
+    uint64_t b;
+    uint32_t s;
+  };
+  vector<E> v;
+  BitSum() = default;
+  BitSum(const vector<bool>& a) {
+    int n = ssize(a);
+    v.resize((n >> 6) + 1);
+    for (int i = 0; i < n; i++) {
+      v[i >> 6].b |= uint64_t(a[i]) << (i & 63);
+    }
+    for (int i = 1; i < (n >> 6) + 1; i++) {
+      v[i].s = v[i - 1].s + __builtin_popcountll(v[i - 1].b);
+    }
+  }
+  int get(int i) {
+    return v[i >> 6].s + __builtin_popcountll(v[i >> 6].b & ((uint64_t(1) << (i & 63)) - 1));
   }
 };
