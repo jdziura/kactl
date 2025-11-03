@@ -16,15 +16,16 @@ using vpi=vector<pi>;
 bool ckmin(auto&a,auto b){return b<a?a=b,1:0;}
 bool ckmax(auto&a,auto b){return b>a?a=b,1:0;}
 #ifdef LOCAL
-auto&operator<<(auto&o,pair<auto,auto>p){
-	return o<<"("<<p.x<<", "<<p.y<<")";}
+auto&operator<<(auto&o,pair<auto,auto>p);
 auto operator<<(auto&o,auto x)->decltype(x.end(),o){
-	o<<"{";int i=0;
-	for(auto&e:x)o<<","+!i++<<e;
-	return o<<"}";
+  o<<"{";int i=0;
+  for(auto&e:x)o<<","+!i++<<e;
+  return o<<"}";
 }
+auto&operator<<(auto&o,pair<auto,auto>p){
+  return o<<"("<<p.x<<", "<<p.y<<")";}
 #define debug(X...)cerr<<"["#X"]: ",[](auto...$){\
-	((cerr<<$<<"; "),...)<<endl;}(X);
+  ((cerr<<$<<"; "),...)<<endl;}(X);
 #else
 #define debug(...){}
 #endif

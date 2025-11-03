@@ -39,6 +39,13 @@
 
 	\subsection{Binomials}
 		\kactlimport{multinomial.h}
+        $ \binom{n}{k}=\dfrac{n!}{k!\left(n-k\right)!}=\dfrac{n^{\underline{k}}}{k!}$,
+		$ \binom{n}{k}=\binom{n-1}{k-1}+\binom{n-1}{k}=\binom{n-1}{k-1}+\binom{n-2}{k-1}+\dots+\binom{k-1}{k-1}$,
+		$ (x+y)^n=\sum_{k=0}^n \binom{n}{k} x^k y^{n-k} $,
+		$ \sum_{i=0}^k \binom{n+i}{i} = \binom{n+k+1}{k} $,
+		$ \left(-1\right)^i \binom{x}{i} = \binom{i - 1 - x}{i} $,
+		$ \sum_{i=0}^k \binom{n}{i} \binom{m}{k - i} = \binom{n + m}{k} $,
+		$ \binom{n}{k} \binom{k}{i} = \binom{n}{i} \binom{n - i}{k - i} $.
 
 \section{General purpose numbers}
 	\subsection{Bernoulli numbers}
@@ -99,18 +106,30 @@
 			\item ways a convex polygon with $n+2$ sides can be cut into triangles by connecting vertices with straight lines.
 			\item permutations of $[n]$ with no 3-term increasing subseq.
 		\end{itemize}
+
+    \subsection{Fibonacci}
+        \[ F_n = \dfrac{\left(\frac{1+\sqrt{5}}{2}\right)^n - \left(\frac{1-\sqrt{5}}{2}\right)^n}{\sqrt{5}} \]
+        \[ F_{n-1}F_{n+1}-F_n^2=(-1)^n, F_{n+k}=F_k F_{n+1} + F_{k-1} F_n, F_n | F_{nk}, NWD(F_m, F_n) = F_{NWD(m, n)} \]
     
-  \subsection{LGV lemma}
-    Let $A = (a_1, \dots, a_n)$, $B = (b_1, \dots, b_n)$ be subsets of vertices of a DAG.
-    By $\omega(P)$ denote a path weight, the product of edge weights in that path.
-    Let $M_{i, j}$ be the sum of path weights over all possible paths from
-    $a_i$ to $b_j$ (when unit weights, note this is the number of paths).
-    \[
-      \det(M) = \sum_{(P_1, \dots, P_n) \in S_\pi(A, B)} \text{sgn}(\pi) \prod_{i=1}^n \omega(P_i)
-    \]
-    Where $S_\pi(A, B)$ is the set of $n$-tuples of vertex disjoint paths (including endpoints)
-    where the $k$-th path is from $a_k$ to $b_{\pi(k)}$.
-    Particularly useful when only identity permutation is possible.
+    \subsection{LGV lemma}
+        Let $A = (a_1, \dots, a_n)$, $B = (b_1, \dots, b_n)$ be subsets of vertices of a DAG.
+        By $\omega(P)$ denote a path weight, the product of edge weights in that path.
+        Let $M_{i, j}$ be the sum of path weights over all possible paths from
+        $a_i$ to $b_j$ (when unit weights, note this is the number of paths).
+        \[
+        \det(M) = \sum_{(P_1, \dots, P_n) \in S_\pi(A, B)} \text{sgn}(\pi) \prod_{i=1}^n \omega(P_i)
+        \]
+        Where $S_\pi(A, B)$ is the set of $n$-tuples of vertex disjoint paths (including endpoints)
+        where the $k$-th path is from $a_k$ to $b_{\pi(k)}$.
+        Particularly useful when only identity permutation is possible.
+
+    \subsection{Woodbury matrix identity}
+        Dla $A\equiv n\times n, C\equiv k\times k, U\equiv n\times k, V\equiv k\times n$
+        jest $(A+UCV)^{-1} = A^{-1} - A^{-1}U(C^{-1}+VA^{-1}U)^{-1}VA^{-1},$
+        przy czym czesto $C=Id$.
+        Uzywane gdy $A^{-1}$ jest juz policzone i chcemy policzyc odwrotnosc lekko zmienionego $A$
+        poprzez $C^{-1}$ i $VA^{-1}U$.
+        Czesto wystepuje w kombinacji z tozsamoscia $\dfrac{1}{1-A} = \sum_{i=0}^\infty A^i$.
 
 \section{Other}
 	\kactlimport{DeBruijn.h}
